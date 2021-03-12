@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Web.Models.ViewModels.EmployeeViewModel>
+
+<div class="row pt-4">
+    <div class="col-6">
+        <h2 class="text-primary">Employee List</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-controller="Employee" asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> &nbsp; Add New Employee
+        </a>
+    </div>
+</div>
+<br />
+<br />
+
+<div class="container p-3 ">
+    <div class="pt-4 input-group mb-3">
+        <div class="text-md-center input-group-prepend">
+            <form>
+                <div class="col-sm-12">
+                    <input name="name" class="form-control" />
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i>&nbsp; Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <br /><br />
+
+
+    @if (Model.Count() > 0)
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Personal Number
+                        </th>
+                        <th>
+                            First Name
+                        </th>
+                        <th>
+                            Last Name
+                        </th>
+                        <th>
+                            Birth Date
+                        </th>
+                        <th>
+                            Position
+                        </th>
+                        <th>
+                            Contact Phone
+                        </th>
+                        <th>
+                            Gender
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            End Date
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.PersonalNumber</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.BirthDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.Position</td>
+                            <td>@item.ContactPhone</td>
+                            <td>@ViewBag.Gender[item.GenderId]</td>
+                            <td>@ViewBag.status[item.StatusId]</td>
+                            <td>@item.EndDate</td>
+
+                            <td class="text-center">
+                                <div class="w-75 btn-group" role="group">
+                                    <a asp-route-Id="@item.Id" asp-action="Update" class="btn btn-primary mx-2">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a asp-route-Id="@item.Id" asp-action="Delete" class="btn btn-danger mx-2">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>No Employee Exist.</p>
+    }
+
+</div>
+
+@if (TempData["Success"] != null)
+{
+<script type="text/javascript">
+
+                    window.onload = function () {
+                                        alert(@TempData["Success"]);
+                                                                    };
+</script>
+
+}
